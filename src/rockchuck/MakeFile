@@ -1,0 +1,1 @@
+g++ -Wall -shared -fPIC -o librockchuck.so rockchuck.cpp
