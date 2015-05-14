@@ -8,6 +8,7 @@ C++/LLVM compiler.
 
 import shlex, inspect, os
 from ctypes import *
+from compiler import *
 
 def rockchuck(fn):
 	def wrap(*args, **kargs):
@@ -17,6 +18,7 @@ def rockchuck(fn):
 		a = CDLL("./rockchuck/librockchuck.so")
 		a.getsrc.restype=c_char_p
 		a.getsrc.argtypes=[c_char_p,c_int,c_char_p]
+		src = compiler.generateAST(src)
 		s = create_string_buffer(len(src))
 		print a.getsrc(s,len(s),src)
 		return fn(*args,**kargs)
