@@ -16,3 +16,6 @@ def math(a,b):
 	return a+b
 
 print math([3,3,3],[2,2,2])
+
+if __name__ == "__main__":
+	print "Loading RockChuck"

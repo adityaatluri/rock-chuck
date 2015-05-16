@@ -9,6 +9,7 @@ C++/LLVM compiler.
 import shlex, inspect, os
 from ctypes import *
 from compiler import *
+import rockchuck
 
 def rockchuck(fn):
 	def wrap(*args, **kargs):
@@ -24,3 +25,30 @@ def rockchuck(fn):
 		return fn(*args,**kargs)
 	return wrap
 
+class rock_chuck(object):
+	def map(self,fn,*args):
+		src = inspect.getsource(fn)
+		print src, type(src)
+		a = CDLL("./rockchuck/librockchuck.so")
+		a.getsrc.restype=c_char_p
+		a.getsrc.argtypes=[c_char_p,c_int,c_char_p]
+		src = compiler.generateAST(src)
+		s = create_string_buffer(len(src))
+		print a.getsrc(s,len(s),src)
+	def apply(self,fn,*args):
+		src = inspect.getsource(fn)
+		print src, type(src)
+		a = CDLL("./rockchuck/librockchuck.so")
+		a.getsrc.restype=c_char_p
+		a.getsrc.argtypes=[c_char_p,c_int,c_char_p]
+		src = compiler.generateAST(src)
+		s = create_string_buffer(len(src))
+		print a.getsrc(s,len(s),src)
+
+
+def RockChuck():
+	r = rock_chuck()
+	return r;
+
+if __name__ == "__main__":
+	print "Loading rockchuck"
