@@ -112,8 +112,6 @@ public:
 	exprcontext(unsigned _value) : value(_value) {}
 };
 
-
-
 class FunctionDef : public stmt {
 private:
 	string &name;
